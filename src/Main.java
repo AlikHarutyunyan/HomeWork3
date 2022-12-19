@@ -14,8 +14,8 @@ public class Main {
         System.out.println("Please choose the action number");
         do {
             System.out.println("1. Sign up \n" +
-                    "2. Log in \n" +
-                    "3. End program");
+                                "2. Log in \n" +
+                                "3. End program");
             userInput = scanner.nextInt();
         } while (!(userInput>=1 && userInput<=3));
 

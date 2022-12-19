@@ -9,10 +9,10 @@ public class Property {
     private int floorNumber;
     private User user;
 
-    public Property (String cityName, String streets, int numberOfRooms, int price,
+    public Property (String cityName, String street, int numberOfRooms, int price,
                      int type, boolean forRent, int houseNumber, int floorNumber, User user) {
         setCityName(cityName);
-        setStreet(streets);
+        setStreet(street);
         setNumberOfRooms(numberOfRooms);
         setPrice(price);
         setType(type);
