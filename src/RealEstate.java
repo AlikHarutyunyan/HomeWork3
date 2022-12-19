@@ -40,9 +40,10 @@ public class RealEstate {
         if (isAvailable) {
             String userPassword;
 
-            System.out.println("Your password should contain at least one number" +
-                    ", should be at least 5 characters long and " +
-                    "should have one of these symbols $, %, _");
+            System.out.println("The password must contain the following elements: \n" +
+                    "- At least 1 character must be a digit \n" +
+                    "- Password must be minimum 5 characters long \n" +
+                    "- At least 1 of this special characters: % _ $");
             do {
                 System.out.println("Enter your password: ");
                 userPassword = scanner.nextLine();
