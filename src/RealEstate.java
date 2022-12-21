@@ -1,21 +1,35 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class RealEstate {
+    Scanner scanner = new Scanner(System.in);
     private City[] cities;
     private Property[] properties;
     private User[] users;
+
 
     public RealEstate () {
         users = new User[] {
                 new User("Michelle", "11458$", "0529516569", true),
                 new User("Alik", "37777777_", "0533061346", false)
         };
+
+        cities = new City[] {
+                new City("Ashkelon", "south", new String[] {"dovev", "acalanit"}),
+                new City("Ashdod", "south", new String[] {"mango", "rambam"}),
+                new City("Tel aviv", "central", new String[] {"alenbi", "dizingof"}),
+                new City("Rishon Letsiyon", "central", new String[] {"hadad", "kaplan"}),
+                new City("Beer sheva", "negev", new String[] {"nesher", "gilad"}),
+                new City("Dimona", "negev", new String[] {"agefen", "ayona"}),
+                new City("Netanya", "sharon", new String[] {"holand", "kedma"}),
+                new City("Kfar Yona", "sharon", new String[] {"egoz", "alfasi"}),
+                new City("Tiberias", "north", new String[] {"golda", "golani"}),
+                new City("Haifa", "north", new String[] {"sirkin", "arad"}),
+        };
     }
 
     public void createUser () {
         User newUser = new User();
-        Scanner scanner = new Scanner(System.in);
-
         String userName;
         do {
             System.out.println("Enter the user name:");
@@ -60,8 +74,86 @@ public class RealEstate {
             }
         } while (newUser.getBroker() == null);
 
-        System.out.println(newUser);
+        users = addUser(users,newUser);
+        System.out.println("Sign up is complete");
     }
+
+    public User login() {
+
+        User currentUser = null;
+
+        do {
+            System.out.println("Enter your user name");
+            String userLogin = scanner.nextLine();
+            System.out.println("Enter your password");
+            String userPassword = scanner.nextLine();
+
+            int userIndex = checkIfUserExists(userLogin, userPassword);
+
+            if (userIndex != -1) {
+                currentUser = users[userIndex];
+            }
+        } while (currentUser == null);
+
+        System.out.println("Login successful. Welcome: " + currentUser.getUserName());
+        return currentUser;
+    }
+
+    public boolean postNewProperty (User user) {
+        final int PUBLISHMENT_QUANTITY;
+        boolean result = false;
+        if (user.getBroker()) {
+            PUBLISHMENT_QUANTITY = 5;
+        }
+
+        else {
+            PUBLISHMENT_QUANTITY = 3;
+        }
+
+        int countUserPublishment = 0;
+        for (int i = 0; i < properties.length; i++) {
+            if (properties[i].getUser().getUserName().equals(user.getUserName())) {
+                countUserPublishment++;
+            }
+        }
+
+        if (countUserPublishment>=PUBLISHMENT_QUANTITY) {
+            System.out.println("You have reached the maximum amount of publishments");
+            result = false;
+        }
+
+        return result;
+    }
+
+    private int checkIfUserExists (String userLogin, String userPassword) {
+        int result = -1;
+        for (int i = 0; i < users.length; i++) {
+            if (users[i].getUserName().equals(userLogin)) {
+                if (users[i].getPassword().equals(userPassword)) {
+                    result = i;
+                    break;
+                }
+            }
+        }
+
+        if (result == -1) {
+            System.out.println("The username or the password is incorrect");
+        }
+        return result;
+    }
+    private User[] addUser (User[] users, User newUser) {
+        User[] tempUsers = new User[users.length + 1];
+
+        for (int i = 0; i < users.length; i++) {
+            tempUsers[i] = users[i];
+        }
+
+        tempUsers[users.length] = newUser;
+
+        return tempUsers;
+    }
+
+
     private boolean checkAnswer(String userAnswer){
         boolean result = false;
         if(userAnswer.equals("yes") || userAnswer.equals("no")){
