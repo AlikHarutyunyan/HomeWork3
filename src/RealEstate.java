@@ -82,20 +82,17 @@ public class RealEstate {
 
         User currentUser = null;
 
-        do {
-            System.out.println("Enter your user name");
-            String userLogin = scanner.nextLine();
-            System.out.println("Enter your password");
-            String userPassword = scanner.nextLine();
+        System.out.println("Enter your user name");
+        String userLogin = scanner.nextLine();
+        System.out.println("Enter your password");
+        String userPassword = scanner.nextLine();
 
-            int userIndex = checkIfUserExists(userLogin, userPassword);
+        int userIndex = checkIfUserExists(userLogin, userPassword);
 
-            if (userIndex != -1) {
-                currentUser = users[userIndex];
-            }
-        } while (currentUser == null);
+        if (userIndex != -1) {
+            currentUser = users[userIndex];
+        }
 
-        System.out.println("Login successful. Welcome: " + currentUser.getUserName());
         return currentUser;
     }
 
