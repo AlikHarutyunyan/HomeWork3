@@ -39,7 +39,7 @@ public class Main {
                         userInput = scanner.nextInt();
 
                         if (userInput == 1) {
-
+                            realEstate.postNewProperty(currentUser);
                         }
                     } while (userInput != 6);
                 }else{

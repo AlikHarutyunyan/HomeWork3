@@ -4,22 +4,13 @@ public class Property {
     private int numberOfRooms;
     private int price;
     private int type;
-    private boolean forRent;
+    private Boolean forRent;
     private int houseNumber;
     private int floorNumber;
     private User user;
 
-    public Property (String cityName, String street, int numberOfRooms, int price,
-                     int type, boolean forRent, int houseNumber, int floorNumber, User user) {
-        setCityName(cityName);
-        setStreet(street);
-        setNumberOfRooms(numberOfRooms);
-        setPrice(price);
-        setType(type);
-        setForRent(forRent);
-        setFloorNumber(floorNumber);
-        setUser(user);
-        setHouseNumber(houseNumber);
+    public Property () {
+
     }
 
     public String getCityName() {
@@ -59,15 +50,28 @@ public class Property {
     }
 
     public void setType(int type) {
-        this.type = type;
+        if (checkType(type)) {
+            this.type = type;
+        }
     }
 
-    public boolean isForRent() {
+    private boolean checkType (int type) {
+        boolean result = false;
+        if (type>=1 && type<=3) {
+            result = true;
+        }
+        return result;
+    }
+
+    public Boolean isForRent() {
         return forRent;
     }
 
-    public void setForRent(boolean forRent) {
-        this.forRent = forRent;
+    public void setForRent(int forRent) {
+        switch (forRent) {
+            case 1 -> this.forRent = true;
+            case 2 -> this.forRent = false;
+        }
     }
 
     public int getHouseNumber() {
@@ -92,5 +96,10 @@ public class Property {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String toString () {
+        String outPut = "City name: " + this.cityName + "street name: " + this.street + " " + this.numberOfRooms + " " + this.forRent;
+        return outPut;
     }
 }
