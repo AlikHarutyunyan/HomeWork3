@@ -265,6 +265,195 @@ public class RealEstate {
         }
         }
 
+        public void printProperties (User user) {
+        int count = 0;
+        if (properties != null) {
+            for (int i = 0; i < properties.length; i++) {
+                if (properties[i].getUser().getUserName().equals(user.getUserName())) {
+                    count++;
+                    System.out.println(count + ") " + properties[i] + "\n");
+                }
+            }
+        }
+
+        else {
+            System.out.println("You have no publications");
+        }
+    }
+
+    public Property[] search () {
+
+        System.out.println("Lets start searching. \n" +
+                "If you want to skip a filter just write -999");
+        Boolean forRent = isForRentFilter();
+        Integer type = getTypeFilter();
+        Integer roomNumber = getRoomNumberFilter();
+        Integer minimumPrice = getMinimumPriceFilter();
+        Integer maximumPrice = getMaximumPriceFilter(minimumPrice);
+
+        for (int i = 0; i < properties.length; i++) {
+
+        }
+    }
+
+    private Integer getMaximumPriceFilter (Integer minimumPrice) {
+        Integer maximumPrice = null;
+        int userInput;
+        boolean endLoop = false;
+
+        do {
+            System.out.println("Enter the maximum price");
+            userInput = scanner.nextInt();
+            scanner.nextLine();
+
+            if (userInput > 0) {
+                if (minimumPrice != null) {
+                    if (minimumPrice >= userInput) {
+                        System.out.println("Maximum price should be higher then minimum price");
+                    }
+
+
+                    else {
+                        maximumPrice = userInput;
+                        endLoop = true;
+                    }
+                }
+
+                else {
+                    maximumPrice = userInput;
+                    endLoop = true;
+                }
+
+            }
+
+            else if (userInput == -999){
+                endLoop = true;
+            }
+
+            else {
+                System.out.println("Maximum price should be higher than 0");
+            }
+        } while (!endLoop);
+        return maximumPrice;
+    }
+
+    private Integer getMinimumPriceFilter () {
+        Integer minimumPrice = null;
+        int userInput;
+        boolean endloop = false;
+
+        do {
+            System.out.println("Enter the minimum price");
+            userInput = scanner.nextInt();
+            scanner.nextLine();
+
+            if (userInput >= 0) {
+                minimumPrice = userInput;
+                endloop = true;
+            }
+
+            else {
+                if (userInput == -999) {
+                    endloop = true;
+                }
+
+                else {
+                    System.out.println("Minimum price should be at least 0");
+                }
+            }
+
+        } while (!endloop);
+        return minimumPrice;
+    }
+
+    private Integer getRoomNumberFilter () {
+        int userInput;
+        Integer roomNumber = null;
+        boolean endLoop = false;
+
+        do {
+            System.out.println("Enter the number of rooms you want");
+            userInput = scanner.nextInt();
+            scanner.nextLine();
+
+            if (userInput>0) {
+                roomNumber = userInput;
+                endLoop = true;
+            }
+
+            else if (userInput == -999) {
+                endLoop = true;
+            }
+
+            else {
+                System.out.println("Room number must be at least 1");
+            }
+
+        } while(!endLoop);
+
+
+        return roomNumber;
+    }
+
+
+    private Integer getTypeFilter (){
+        int userInput;
+        Integer type = null;
+        boolean endLoop = false;
+
+        do {
+            System.out.println("Enter the number of property type \n" +
+                    "1. Regular apartment in apartment building\n" +
+                    "2. Penthouse in apartment building\n" +
+                    "3. Land house");
+            userInput = scanner.nextInt();
+
+            if (userInput >= 1 && userInput<=3 || userInput==-999) {
+                switch (userInput) {
+                    case 1 -> type = 1;
+                    case 2 -> type = 2;
+                    case 3 -> type = 3;
+                }
+                endLoop = true;
+            }
+
+            else {
+                System.out.println("Please choose a relevant option or skip by writing -999");
+            }
+
+        } while (!endLoop);
+        return type;
+    }
+
+    private Boolean isForRentFilter (){
+        int userInput;
+        Boolean forRent = null;
+        boolean endLoop = false;
+
+        do {
+            System.out.println("Enter the number of relevant option: \n" +
+                    "1. Property for rent \n" +
+                    "2. Property for sale");
+            userInput = scanner.nextInt();
+            scanner.nextLine();
+
+            if (userInput == 1 || userInput == 2 || userInput==-999) {
+                endLoop = true;
+
+                switch (userInput) {
+                    case 1 -> forRent = true;
+                    case 2 -> forRent = false;
+                }
+            }
+
+            else {
+                System.out.println("Please choose a relevant option or skip by writing -999");
+            }
+        } while (!endLoop);
+        return forRent;
+    }
+
+
     private Property[] deletePost(int postIndex){
         int arrLength;
 

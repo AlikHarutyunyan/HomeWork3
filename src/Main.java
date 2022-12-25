@@ -50,6 +50,7 @@ public class Main {
                             }
                             case 2 -> realEstate.removeProperty(currentUser);
                             case 3 -> realEstate.printAllProperties();
+                            case 4 -> realEstate.printProperties(currentUser);
                         }
                     } while (userInput != 6);
                 }else{
