@@ -274,6 +274,9 @@ public class RealEstate {
                     System.out.println(count + ") " + properties[i] + "\n");
                 }
             }
+            if(count == 0){
+                System.out.println("You have no publications");
+            }
         }
 
         else {
@@ -295,27 +298,12 @@ public class RealEstate {
             Integer maximumPrice = getMaximumPriceFilter(minimumPrice);
 
             for (int i = 0; i < properties.length; i++) {
-                if (forRent == null) {
-                    forRent = properties[i].isForRent();
-                }
-                if (type == null) {
-                    type = properties[i].getType();
-                }
-                if (roomNumber == null) {
-                    roomNumber = properties[i].getNumberOfRooms();
-                }
-                if (minimumPrice == null) {
-                    minimumPrice = 0;
-                }
-                if (maximumPrice == null) {
-                    maximumPrice = properties[i].getPrice();
-                }
 
-                if (properties[i].isForRent() == forRent &&
-                        properties[i].getType() == type &&
-                        properties[i].getNumberOfRooms() == roomNumber &&
-                        properties[i].getPrice() > minimumPrice &&
-                        properties[i].getPrice() <= maximumPrice
+                if (    (forRent == null || properties[i].isForRent() == forRent) &&
+                        (type == null || properties[i].getType() == type) &&
+                        (roomNumber == null || properties[i].getNumberOfRooms() == roomNumber) &&
+                        (minimumPrice == null || properties[i].getPrice() > minimumPrice) &&
+                        (maximumPrice == null || properties[i].getPrice() <= maximumPrice)
                 ) {
                     filteredProperties = addProperty(filteredProperties, properties[i]);
                 }

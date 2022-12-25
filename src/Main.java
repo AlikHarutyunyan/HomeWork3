@@ -63,7 +63,5 @@ public class Main {
             }
 
         } while (!(userInput>=1 && userInput<=3));
-
-
     }
 }
