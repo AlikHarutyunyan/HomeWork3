@@ -49,6 +49,7 @@ public class Main {
                                 }
                             }
                             case 2 -> realEstate.removeProperty(currentUser);
+                            case 3 -> realEstate.printAllProperties();
                         }
                     } while (userInput != 6);
                 }else{

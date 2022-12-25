@@ -253,6 +253,18 @@ public class RealEstate {
             }
         }
 
+        public void printAllProperties(){
+        int count = 0;
+        if(properties != null) {
+            for (int i = 0; i < properties.length; i++) {
+                count++;
+                System.out.println(count + ") " + properties[i] + "\n");
+            }
+        }else{
+            System.out.println("Currently there are no publications");
+        }
+        }
+
     private Property[] deletePost(int postIndex){
         int arrLength;
 
