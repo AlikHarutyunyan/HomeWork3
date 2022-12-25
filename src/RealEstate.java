@@ -292,7 +292,30 @@ public class RealEstate {
         Integer maximumPrice = getMaximumPriceFilter(minimumPrice);
 
         for (int i = 0; i < properties.length; i++) {
+            if(forRent == null){
+                forRent = properties[i].isForRent();
+            }
+            if(type == null){
+                type = properties[i].getType();
+            }
+            if(roomNumber == null){
+                roomNumber = properties[i].getNumberOfRooms();
+            }
+            if(minimumPrice == null){
+                minimumPrice = 0;
+            }
+            if(maximumPrice == null){
+                maximumPrice = properties[i].getPrice();
+            }
 
+            if(properties[i].isForRent() == forRent &&
+               properties[i].getType() == type &&
+               properties[i].getNumberOfRooms() == roomNumber &&
+               properties[i].getPrice() > minimumPrice &&
+               properties[i].getPrice() <= maximumPrice
+            ){
+                //Every filter is true
+            }
         }
     }
 
