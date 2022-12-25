@@ -283,40 +283,53 @@ public class RealEstate {
 
     public Property[] search () {
 
-        System.out.println("Lets start searching. \n" +
-                "If you want to skip a filter just write -999");
-        Boolean forRent = isForRentFilter();
-        Integer type = getTypeFilter();
-        Integer roomNumber = getRoomNumberFilter();
-        Integer minimumPrice = getMinimumPriceFilter();
-        Integer maximumPrice = getMaximumPriceFilter(minimumPrice);
+        Property[] filteredProperties = null;
 
-        for (int i = 0; i < properties.length; i++) {
-            if(forRent == null){
-                forRent = properties[i].isForRent();
-            }
-            if(type == null){
-                type = properties[i].getType();
-            }
-            if(roomNumber == null){
-                roomNumber = properties[i].getNumberOfRooms();
-            }
-            if(minimumPrice == null){
-                minimumPrice = 0;
-            }
-            if(maximumPrice == null){
-                maximumPrice = properties[i].getPrice();
+        if (properties != null) {
+            System.out.println("Lets start searching. \n" +
+                    "If you want to skip a filter just write -999");
+            Boolean forRent = isForRentFilter();
+            Integer type = getTypeFilter();
+            Integer roomNumber = getRoomNumberFilter();
+            Integer minimumPrice = getMinimumPriceFilter();
+            Integer maximumPrice = getMaximumPriceFilter(minimumPrice);
+
+            for (int i = 0; i < properties.length; i++) {
+                if (forRent == null) {
+                    forRent = properties[i].isForRent();
+                }
+                if (type == null) {
+                    type = properties[i].getType();
+                }
+                if (roomNumber == null) {
+                    roomNumber = properties[i].getNumberOfRooms();
+                }
+                if (minimumPrice == null) {
+                    minimumPrice = 0;
+                }
+                if (maximumPrice == null) {
+                    maximumPrice = properties[i].getPrice();
+                }
+
+                if (properties[i].isForRent() == forRent &&
+                        properties[i].getType() == type &&
+                        properties[i].getNumberOfRooms() == roomNumber &&
+                        properties[i].getPrice() > minimumPrice &&
+                        properties[i].getPrice() <= maximumPrice
+                ) {
+                    filteredProperties = addProperty(filteredProperties, properties[i]);
+                }
             }
 
-            if(properties[i].isForRent() == forRent &&
-               properties[i].getType() == type &&
-               properties[i].getNumberOfRooms() == roomNumber &&
-               properties[i].getPrice() > minimumPrice &&
-               properties[i].getPrice() <= maximumPrice
-            ){
-                //Every filter is true
+            if (filteredProperties == null) {
+                System.out.println("No results found");
             }
         }
+
+        else {
+            System.out.println("There are no properties to search");
+        }
+        return filteredProperties;
     }
 
     private Integer getMaximumPriceFilter (Integer minimumPrice) {
@@ -628,4 +641,14 @@ public class RealEstate {
         return isAvailable;
     }
 
+    public void printProperties (Property[] properties) {
+        int count = 0;
+
+        if (properties != null) {
+            for (int i = 0; i < properties.length; i++) {
+                count++;
+                System.out.println(count + ") " + properties[i] + "\n");
+            }
+        }
+    }
 }

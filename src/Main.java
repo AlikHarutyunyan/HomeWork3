@@ -51,6 +51,10 @@ public class Main {
                             case 2 -> realEstate.removeProperty(currentUser);
                             case 3 -> realEstate.printAllProperties();
                             case 4 -> realEstate.printProperties(currentUser);
+                            case 5 -> {
+                                Property[] filteredProperties = realEstate.search();
+                                realEstate.printProperties(filteredProperties);
+                            }
                         }
                     } while (userInput != 6);
                 }else{
