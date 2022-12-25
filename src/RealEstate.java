@@ -15,16 +15,16 @@ public class RealEstate {
 //        };
 
         cities = new City[] {
-                new City("Ashkelon", "south", new String[] {"dovev", "acalanit"}),
-                new City("Ashdod", "south", new String[] {"mango", "rambam"}),
-                new City("Tel aviv", "central", new String[] {"alenbi", "dizingof"}),
-                new City("Rishon Letsiyon", "central", new String[] {"hadad", "kaplan"}),
-                new City("Beer sheva", "negev", new String[] {"nesher", "gilad"}),
-                new City("Dimona", "negev", new String[] {"agefen", "ayona"}),
-                new City("Netanya", "sharon", new String[] {"holand", "kedma"}),
-                new City("Kfar Yona", "sharon", new String[] {"egoz", "alfasi"}),
-                new City("Tiberias", "north", new String[] {"golda", "golani"}),
-                new City("Haifa", "north", new String[] {"sirkin", "arad"}),
+                new City("Ashkelon", "south", new String[] {"Dovev", "Acalanit"}),
+                new City("Ashdod", "south", new String[] {"Mango", "Rambam"}),
+                new City("Tel aviv", "central", new String[] {"Alenbi", "Dizingof"}),
+                new City("Rishon Letsiyon", "central", new String[] {"Hadad", "Kaplan"}),
+                new City("Beer sheva", "negev", new String[] {"Nesher", "Gilad"}),
+                new City("Dimona", "negev", new String[] {"Agefen", "Ayona"}),
+                new City("Netanya", "sharon", new String[] {"Holand", "Kedma"}),
+                new City("Kfar Yona", "sharon", new String[] {"Egoz", "Alfasi"}),
+                new City("Tiberias", "north", new String[] {"Golda", "Golani"}),
+                new City("Haifa", "north", new String[] {"Sirkin", "Arad"}),
         };
 
     }
@@ -141,7 +141,7 @@ public class RealEstate {
             }
 
             else {
-                newProperty.setCityName(cityName);
+                newProperty.setCityName(cities[cityIndex].getCityName());
                 String streetName;
                 for (int i = 0; i < cities[cityIndex].getStreets().length; i++) {
                     System.out.println(cities[cityIndex].getStreets()[i]);
@@ -149,19 +149,21 @@ public class RealEstate {
 
                 System.out.println("Enter the name of the street");
                 streetName = scanner.nextLine();
+                streetName = streetName.toLowerCase().trim();
 
-                if (!checkIfStreetExists(streetName, cityIndex)) {
+                int streetIndex = checkIfStreetExists(streetName, cityIndex);
+                if (streetIndex == -1) {
                     System.out.println("The street doesnt exist");
                 }
 
                 else {
-                    newProperty.setStreet(streetName);
+                    newProperty.setStreet(cities[cityIndex].getStreets()[streetIndex]);
                     int typeOfProperty;
 
                     System.out.println("Enter the number of property type \n" +
                             "1. Regular apartment in apartment building\n" +
-                            "2. penthouse in apartment building\n" +
-                            "3. land house");
+                            "2. Penthouse in apartment building\n" +
+                            "3. Land house");
                     typeOfProperty = scanner.nextInt();
                     scanner.nextLine();
 
@@ -232,16 +234,16 @@ public class RealEstate {
     }
 
 
-    private boolean checkIfStreetExists (String streetName, int cityIndex) {
-        boolean streetExists = false;
+    private int checkIfStreetExists (String streetName, int cityIndex) {
+        int streetIndex = -1;
 
         for (int i = 0; i < cities[cityIndex].getStreets().length; i++) {
-            if (cities[cityIndex].getStreets()[i].equals(streetName)) {
-                streetExists = true;
+            if (cities[cityIndex].getStreets()[i].toLowerCase().equals(streetName)) {
+                streetIndex = i;
                 break;
             }
         }
-        return streetExists;
+        return streetIndex;
     }
 
     private int checkIfCityExists (String cityName) {
@@ -257,11 +259,13 @@ public class RealEstate {
 
     private int checkIfUserExists (String userLogin, String userPassword) {
         int result = -1;
-        for (int i = 0; i < users.length; i++) {
-            if (users[i].getUserName().equals(userLogin)) {
-                if (users[i].getPassword().equals(userPassword)) {
-                    result = i;
-                    break;
+        if(users != null) {
+            for (int i = 0; i < users.length; i++) {
+                if (users[i].getUserName().equals(userLogin)) {
+                    if (users[i].getPassword().equals(userPassword)) {
+                        result = i;
+                        break;
+                    }
                 }
             }
         }

@@ -99,7 +99,26 @@ public class Property {
     }
 
     public String toString () {
-        String outPut = "City name: " + this.cityName + "street name: " + this.street + " " + this.numberOfRooms + " " + this.forRent;
-        return outPut;
+        String output = this.cityName + " - " + this.street + " " + this.houseNumber + ". \n";
+        switch(this.type){
+            case 1 -> output += "Regular apartment ";
+            case 2 -> output += "Penthouse apartment ";
+            case 3 -> output += "Land house ";
+        }
+        if(isForRent()){
+            output += "- for rent: ";
+        }else{
+            output += "- for sale: ";
+        }
+        output += this.numberOfRooms + " rooms, floor " + this.floorNumber + ".\n";
+        output += "Price: " + this.price + "$.\n";
+        output += "Contact info: " + this.user.getUserName() + " " + this.user.getPhoneNumber() + " ";
+        if(user.getBroker()){
+            output += "(real estate broker).";
+        }else{
+            output += "(regular user).";
+        }
+
+        return output;
     }
 }
