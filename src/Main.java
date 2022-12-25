@@ -40,8 +40,15 @@ public class Main {
                         userInput = scanner.nextInt();
                         scanner.nextLine();
 
-                        if (userInput == 1) {
-                            realEstate.postNewProperty(currentUser);
+                        switch(userInput){
+                            case 1 -> {
+                                if(realEstate.postNewProperty(currentUser)){
+                                    System.out.println("Publishment was successful!");
+                                }else{
+                                    System.out.println("Publishment has failed!");
+                                }
+                            }
+                            case 2 -> realEstate.removeProperty(currentUser);
                         }
                     } while (userInput != 6);
                 }else{

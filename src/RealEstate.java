@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class RealEstate {
@@ -9,10 +8,10 @@ public class RealEstate {
 
 
     public RealEstate () {
-//        users = new User[] {
-//                new User("Michelle", "11458$", "0529516569", true),
-//                new User("Alik", "37777777_", "0533061346", false)
-//        };
+        users = new User[] {
+                new User("Michelle", "11458$", "0529516569", true),
+                new User("Alik", "37777777_", "0533061346", false)
+        };
 
         cities = new City[] {
                 new City("Ashkelon", "south", new String[] {"Dovev", "Acalanit"}),
@@ -212,25 +211,92 @@ public class RealEstate {
                             propertyPrice = scanner.nextInt();
                             scanner.nextLine();
                             newProperty.setPrice(propertyPrice);
+                            newProperty.setUser(user);
+                            properties = addProperty(properties, newProperty);
                             result = true;
                         }
                     }
                 }
             }
-
-            if (result) {
-                newProperty.setUser(user);
-                properties = addProperty(properties, newProperty);
-
-                System.out.println("Publishment was successful");
-                System.out.println(properties[0]);
-            }
-
-            else {
-                System.out.println("Publishment has failed");
-            }
         }
         return result;
+    }
+
+    public void removeProperty(User user){
+        int userPosts = countUserPublishments(user);
+        if(userPosts == 0){
+            System.out.println("You have no publishments to delete");
+        }else{
+            int[][] postIdArray = new int[userPosts][];
+            System.out.println("Choose the number of the property you'd like to delete");
+
+            int option = 0;
+            for (int i = 0; i < properties.length; i++) {
+                if (properties[i].getUser().getUserName().equals(user.getUserName())) {
+                    postIdArray[option] = new int[]{
+                            option+1, i
+                    };
+                    option++;
+                    System.out.println(option + ") " + properties[i].getCityName() + " - " + properties[i].getStreet() + " " + properties[i].getHouseNumber());
+                }
+            }
+
+                int userInput = scanner.nextInt();
+                scanner.nextLine();
+                int postIndex = getChosenPostIndex(postIdArray,userInput);
+                if(postIndex != -1){
+                    properties = deletePost(postIndex);
+                    System.out.println("The post was successfully removed!");
+                }else{
+                    System.out.println("Remove process failed! You chose invalid option");
+                }
+            }
+        }
+
+    private Property[] deletePost(int postIndex){
+        int arrLength;
+
+        if (properties == null) {
+            arrLength = 0;
+        }
+
+        else {
+            arrLength = properties.length;
+        }
+
+        Property[] tempProperties = new Property[arrLength - 1];
+
+        for (int i = 0; i < properties.length; i++) {
+            if(i != postIndex) {
+                tempProperties[i] = properties[i];
+            }
+        }
+
+        return tempProperties;
+    }
+
+    private int getChosenPostIndex(int[][] postId, int userInput){
+        int index = -1;
+        if(postId != null) {
+            for (int i = 0; i < postId.length; i++) {
+                if (postId[i][0] == userInput) {
+                    index = postId[i][1];
+                    break;
+                }
+            }
+        }
+        return index;
+    }
+    private int countUserPublishments(User user){
+        int quantity = 0;
+        if(properties != null) {
+            for (int i = 0; i < properties.length; i++) {
+                if(properties[i].getUser().getUserName().equals(user.getUserName())){
+                    quantity++;
+                }
+            }
+        }
+        return quantity;
     }
 
 
