@@ -9,10 +9,10 @@ public class RealEstate {
 
 
     public RealEstate () {
-        users = new User[] {
-                new User("Michelle", "11458$", "0529516569", true),
-                new User("Alik", "37777777_", "0533061346", false)
-        };
+//        users = new User[] {
+//                new User("Michelle", "11458$", "0529516569", true),
+//                new User("Alik", "37777777_", "0533061346", false)
+//        };
 
         cities = new City[] {
                 new City("Ashkelon", "south", new String[] {"dovev", "acalanit"}),
@@ -120,7 +120,6 @@ public class RealEstate {
 
         if (countUserPublishment>=PUBLISHMENT_QUANTITY) {
             System.out.println("You have reached the maximum amount of publishments");
-            result = false;
         }
 
         else {
@@ -139,7 +138,6 @@ public class RealEstate {
 
             if (cityIndex == -1) {
                 System.out.println("The city you wrote doesnt exist");
-                result = false;
             }
 
             else {
@@ -154,7 +152,6 @@ public class RealEstate {
 
                 if (!checkIfStreetExists(streetName, cityIndex)) {
                     System.out.println("The street doesnt exist");
-                    result = false;
                 }
 
                 else {
@@ -166,6 +163,7 @@ public class RealEstate {
                             "2. penthouse in apartment building\n" +
                             "3. land house");
                     typeOfProperty = scanner.nextInt();
+                    scanner.nextLine();
 
                     newProperty.setType(typeOfProperty);
 
@@ -178,17 +176,20 @@ public class RealEstate {
                             int floorNumber;
                             System.out.println("Enter the floor number");
                             floorNumber = scanner.nextInt();
+                            scanner.nextLine();
                             newProperty.setFloorNumber(floorNumber);
                         }
 
                         int numberOfRooms;
                         System.out.println("Enter the number of rooms");
                         numberOfRooms = scanner.nextInt();
+                        scanner.nextLine();
                         newProperty.setNumberOfRooms(numberOfRooms);
 
                         int houseNumber;
                         System.out.println("Enter the house number");
                         houseNumber = scanner.nextInt();
+                        scanner.nextLine();
                         newProperty.setHouseNumber(houseNumber);
 
                         int forRent;
@@ -196,6 +197,7 @@ public class RealEstate {
                                 "1. property for rent \n" +
                                 "2. property for sale");
                         forRent = scanner.nextInt();
+                        scanner.nextLine();
                         newProperty.setForRent(forRent);
 
                         if (newProperty.isForRent() == null) {
@@ -206,6 +208,7 @@ public class RealEstate {
                             int propertyPrice;
                             System.out.println("Enter the price of the property");
                             propertyPrice = scanner.nextInt();
+                            scanner.nextLine();
                             newProperty.setPrice(propertyPrice);
                             result = true;
                         }
@@ -214,6 +217,7 @@ public class RealEstate {
             }
 
             if (result) {
+                newProperty.setUser(user);
                 properties = addProperty(properties, newProperty);
 
                 System.out.println("Publishment was successful");
@@ -268,13 +272,19 @@ public class RealEstate {
         return result;
     }
     private User[] addUser (User[] users, User newUser) {
-        User[] tempUsers = new User[users.length + 1];
+        int usersLength;
+        if(users == null){
+            usersLength = 0;
+        }else{
+            usersLength = users.length;
+        }
+        User[] tempUsers = new User[usersLength + 1];
 
-        for (int i = 0; i < users.length; i++) {
+        for (int i = 0; i < usersLength; i++) {
             tempUsers[i] = users[i];
         }
 
-        tempUsers[users.length] = newUser;
+        tempUsers[usersLength] = newUser;
 
         return tempUsers;
     }
@@ -312,11 +322,13 @@ public class RealEstate {
 
     private boolean checkIfAvailable(String userName){
         boolean isAvailable = true;
-        for (int i = 0; i < users.length; i++) {
-            if (userName.equals(users[i].getUserName())) {
-                System.out.println("The user name is already taken");
-                isAvailable = false;
-                break;
+        if(users != null) {
+            for (int i = 0; i < users.length; i++) {
+                if (userName.equals(users[i].getUserName())) {
+                    System.out.println("The user name is already taken");
+                    isAvailable = false;
+                    break;
+                }
             }
         }
         return isAvailable;

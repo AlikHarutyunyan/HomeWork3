@@ -17,6 +17,7 @@ public class Main {
                                 "2. Log in \n" +
                                 "3. End program");
             userInput = scanner.nextInt();
+            scanner.nextLine();
 
             if (userInput==1) {
                 realEstate.createUser();
@@ -37,6 +38,7 @@ public class Main {
                                 "5. Search property by filters \n" +
                                 "6. Sign out and return to main menu");
                         userInput = scanner.nextInt();
+                        scanner.nextLine();
 
                         if (userInput == 1) {
                             realEstate.postNewProperty(currentUser);
