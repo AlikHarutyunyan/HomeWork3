@@ -56,11 +56,7 @@ public class Property {
     }
 
     private boolean checkType (int type) {
-        boolean result = false;
-        if (type>=1 && type<=3) {
-            result = true;
-        }
-        return result;
+        return type >= 1 && type <= 3;
     }
 
     public Boolean isForRent() {

@@ -13,9 +13,10 @@ public class Main {
 
         System.out.println("Please choose the action number");
         do {
-            System.out.println("1. Sign up \n" +
-                                "2. Log in \n" +
-                                "3. End program");
+            System.out.println("""
+                    1. Sign up
+                    2. Log in
+                    3. End program""");
             userInput = scanner.nextInt();
             scanner.nextLine();
 
@@ -31,12 +32,13 @@ public class Main {
                     System.out.println("Login successful. Welcome: " + currentUser.getUserName());
                     System.out.println("Please choose the action number");
                     do {
-                        System.out.println("1. Publish new property \n" +
-                                "2. Remove property publication \n" +
-                                "3. Show all the property publication \n" +
-                                "4. Show all your property publications \n" +
-                                "5. Search property by filters \n" +
-                                "6. Sign out and return to main menu");
+                        System.out.println("""
+                                1. Publish new property
+                                2. Remove property publication
+                                3. Show all the property publication
+                                4. Show all your property publications
+                                5. Search property by filters
+                                6. Sign out and return to main menu""");
                         userInput = scanner.nextInt();
                         scanner.nextLine();
 
@@ -53,7 +55,7 @@ public class Main {
                             case 4 -> realEstate.printProperties(currentUser);
                             case 5 -> {
                                 Property[] filteredProperties = realEstate.search();
-                                realEstate.printProperties(filteredProperties);
+                                realEstate.printFilteredProperties(filteredProperties);
                             }
                         }
                     } while (userInput != 6);
