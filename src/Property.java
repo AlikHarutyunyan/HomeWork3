@@ -108,7 +108,7 @@ public class Property {
         }
         output += this.numberOfRooms + " rooms, floor " + this.floorNumber + ".\n";
         output += "Price: " + this.price + "$.\n";
-        output += "Contact info: " + this.user.getUserName() + " " + this.user.getPhoneNumber() + " ";
+        output += "Contact info: " + this.user + " ";
         if(user.getBroker()){
             output += "(real estate broker).";
         }else{

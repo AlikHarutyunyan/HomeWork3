@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class RealEstate {
-    Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     private final City[] cities;
     private Property[] properties;
     private User[] users;
@@ -76,14 +76,14 @@ public class RealEstate {
 
     private void setIsBrokerFromUser(User newUser){
         do {
-            System.out.println("Are you a broker? Answer yes/no");
+            System.out.println("Are you a broker? Answer " + Constants.POSITIVE_ANSWER + "/" + Constants.NEGATIVE_ANSWER);
             String userAnswer = scanner.nextLine();
             userAnswer = userAnswer.toLowerCase().trim();
 
             if(checkAnswer(userAnswer)){
                 switch(userAnswer){
-                    case "yes" -> newUser.setBroker(true);
-                    case "no" -> newUser.setBroker(false);
+                    case Constants.POSITIVE_ANSWER -> newUser.setBroker(true);
+                    case Constants.NEGATIVE_ANSWER -> newUser.setBroker(false);
                 }
             }
         } while (newUser.getBroker() == null);
@@ -101,7 +101,7 @@ public class RealEstate {
 
         int userIndex = checkIfUserExists(userLogin, userPassword);
 
-        if (userIndex != -1) {
+        if (userIndex != Constants.INVALID_VALUE) {
             currentUser = users[userIndex];
         }
 
@@ -127,7 +127,7 @@ public class RealEstate {
             String cityName = getCityNameFromUser();
             int cityIndex = checkIfCityExists(cityName);
 
-            if(cityIndex == -1){
+            if(cityIndex == Constants.INVALID_VALUE){
                 System.out.println("The city you wrote doesnt exist");
             }else{
                 newProperty.setCityName(cities[cityIndex].getCityName());
@@ -135,7 +135,7 @@ public class RealEstate {
                 String streetName = getStreetNameFromUser(cityIndex);
                 int streetIndex = checkIfStreetExists(streetName, cityIndex);
 
-                if(streetIndex == -1){
+                if(streetIndex == Constants.INVALID_VALUE){
                     System.out.println("The street doesnt exist");
                 }else{
                     newProperty.setStreet(cities[cityIndex].getStreets()[streetIndex]);
@@ -146,7 +146,10 @@ public class RealEstate {
                     if(newProperty.getType() != typeOfProperty) {
                         System.out.println("Your input was not correct");
                     }else{
-                        if (newProperty.getType() == 1 || newProperty.getType() == 2) {
+                        if (    newProperty.getType() == Constants.REGULAR_APARTMENT_TYPE ||
+                                newProperty.getType() == Constants.PENTHOUSE_APARTMENT_TYPE)
+                        {
+
                             setFloorNumberFromUser(newProperty);
                         }
 
@@ -274,7 +277,7 @@ public class RealEstate {
                 int userInput = scanner.nextInt();
                 scanner.nextLine();
                 int postIndex = getChosenPostIndex(postIdArray,userInput);
-                if(postIndex != -1){
+                if(postIndex != Constants.INVALID_VALUE){
                     properties = deletePost(postIndex);
                     System.out.println("The post was successfully removed!");
                 }else{
@@ -318,7 +321,7 @@ public class RealEstate {
         Property[] filteredProperties = null;
         if (properties != null && properties.length > 0) {
             System.out.println("Lets start searching. \n" +
-                    "If you want to skip a filter just write -999");
+                    "If you want to skip a filter just write " + Constants.INVALID_VALUE);
             Boolean forRent = isForRentFilter();
             Integer type = getTypeFilter();
             Integer roomNumber = getRoomNumberFilter();
@@ -364,7 +367,7 @@ public class RealEstate {
             userInput = scanner.nextInt();
             scanner.nextLine();
 
-            if(userInput != -999) {
+            if(userInput != Constants.SKIP_FILTER_NUMBER) {
                 if(minimumPrice != null) {
                     if (minimumPrice >= userInput) {
                         System.out.println("Maximum price should be higher then minimum price");
@@ -392,7 +395,7 @@ public class RealEstate {
         userInput = scanner.nextInt();
         scanner.nextLine();
 
-        if(userInput != -999){
+        if(userInput != Constants.SKIP_FILTER_NUMBER){
             minimumPrice = userInput;
         }
 
@@ -408,7 +411,7 @@ public class RealEstate {
         userInput = scanner.nextInt();
         scanner.nextLine();
 
-        if (userInput != -999) {
+        if (userInput != Constants.SKIP_FILTER_NUMBER) {
             roomNumber = userInput;
         }
 
@@ -429,17 +432,16 @@ public class RealEstate {
                     3. Land house""");
             userInput = scanner.nextInt();
 
-            if (userInput >= 1 && userInput<=3 || userInput==-999) {
+            if (userInput >= Constants.REGULAR_APARTMENT_TYPE && userInput<=Constants.LAND_HOUSE_TYPE
+                    || userInput == Constants.INVALID_VALUE) {
                 switch (userInput) {
-                    case 1 -> type = 1;
-                    case 2 -> type = 2;
-                    case 3 -> type = 3;
+                    case Constants.REGULAR_APARTMENT_TYPE, Constants.LAND_HOUSE_TYPE, Constants.PENTHOUSE_APARTMENT_TYPE -> type = userInput;
                 }
                 endLoop = true;
             }
 
             else {
-                System.out.println("Please choose a relevant option or skip by writing -999");
+                System.out.println("Please choose a relevant option or skip by writing " + Constants.INVALID_VALUE);
             }
         } while (!endLoop);
         return type;
@@ -458,17 +460,18 @@ public class RealEstate {
             userInput = scanner.nextInt();
             scanner.nextLine();
 
-            if (userInput == 1 || userInput == 2 || userInput==-999) {
+            if (userInput == Constants.FOR_RENT_OPTION || userInput == Constants.FOR_SALE_OPTION
+                    || userInput == Constants.INVALID_VALUE) {
                 endLoop = true;
 
                 switch (userInput) {
-                    case 1 -> forRent = true;
-                    case 2 -> forRent = false;
+                    case Constants.FOR_RENT_OPTION -> forRent = true;
+                    case Constants.FOR_SALE_OPTION -> forRent = false;
                 }
             }
 
             else {
-                System.out.println("Please choose a relevant option or skip by writing -999");
+                System.out.println("Please choose a relevant option or skip by writing " + Constants.INVALID_VALUE);
             }
         } while (!endLoop);
         return forRent;
@@ -496,7 +499,7 @@ public class RealEstate {
     }
 
     private int getChosenPostIndex(int[][] postId, int userInput){
-        int index = -1;
+        int index = Constants.INVALID_VALUE;
         if(postId != null) {
             for (int i = 0; i < postId.length; i++) {
                 if (postId[i][0] == userInput) {
@@ -521,7 +524,7 @@ public class RealEstate {
 
 
     private int checkIfStreetExists (String streetName, int cityIndex) {
-        int streetIndex = -1;
+        int streetIndex = Constants.INVALID_VALUE;
 
         for (int i = 0; i < cities[cityIndex].getStreets().length; i++) {
             if (cities[cityIndex].getStreets()[i].toLowerCase().equals(streetName)) {
@@ -533,7 +536,7 @@ public class RealEstate {
     }
 
     private int checkIfCityExists (String cityName) {
-        int indexOfCity = -1;
+        int indexOfCity = Constants.INVALID_VALUE;
         for (int i = 0; i < cities.length; i++) {
             if (cities[i].getCityName().toLowerCase().equals(cityName)) {
                 indexOfCity = i;
@@ -544,7 +547,7 @@ public class RealEstate {
     }
 
     private int checkIfUserExists (String userLogin, String userPassword) {
-        int result = -1;
+        int result = Constants.INVALID_VALUE;
         if(users != null) {
             for (int i = 0; i < users.length; i++) {
                 if (users[i].getUserName().equals(userLogin)) {
@@ -556,7 +559,7 @@ public class RealEstate {
             }
         }
 
-        if (result == -1) {
+        if (result == Constants.INVALID_VALUE) {
             System.out.println("The username or the password is incorrect");
         }
         return result;
@@ -602,7 +605,7 @@ public class RealEstate {
 
     private boolean checkAnswer(String userAnswer){
         boolean result = false;
-        if(userAnswer.equals("yes") || userAnswer.equals("no")){
+        if(userAnswer.equals(Constants.POSITIVE_ANSWER) || userAnswer.equals(Constants.NEGATIVE_ANSWER)){
             result = true;
         }else{
             System.out.println("Please answer correctly");

@@ -4,7 +4,6 @@ public class User {
     private String phoneNumber;
     private Boolean isBroker;
 
-    public static final int PHONE_NUMBER_LENGTH = 10;
 
     public User (String userName, String password, String phoneNumber, boolean isBroker) {
         setUserName(userName);
@@ -41,7 +40,7 @@ public class User {
 
     private boolean isValidPassword(String password){
         boolean result = false;
-        if (password.length()>=5) {
+        if (password.length() >= Constants.MINIMUM_PASSWORD_LENGTH) {
             if (password.contains("$") || password.contains("_") || password.contains("%")) {
                 if (containsNumber(password)) {
                     result = true;
@@ -53,7 +52,7 @@ public class User {
 
     private boolean containsNumber(String string) {
         boolean isNumberCheck = false;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i <= Constants.LAST_DIGIT; i++) {
             if (string.contains("" + i)) {
                 isNumberCheck = true;
                 break;
@@ -74,7 +73,7 @@ public class User {
 
     private boolean phoneNumberValidation(String phoneNumber){
         boolean isPhoneNumber = true;
-        if (phoneNumber.length() == PHONE_NUMBER_LENGTH && phoneNumber.startsWith("05")) {
+        if (phoneNumber.length() == Constants.PHONE_NUMBER_LENGTH && phoneNumber.startsWith("05")) {
             for (int i = 0; i < phoneNumber.length(); i++) {
                 if (!(containsNumber( "" + phoneNumber.charAt(i)))) {
                     isPhoneNumber = false;
@@ -100,13 +99,7 @@ public class User {
     }
 
     public String toString(){
-        String output = "Username: "+ this.userName + " Password: " + this.password + " Phone number: " + this.phoneNumber;
-        if(this.isBroker){
-            output += " (broker)";
-        }else{
-            output += " (regular user)";
-        }
-        return output;
+        return this.getUserName() + " " + this.getPhoneNumber();
     }
 
 
