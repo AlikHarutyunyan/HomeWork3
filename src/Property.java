@@ -65,8 +65,8 @@ public class Property {
 
     public void setForRent(int forRent) {
         switch (forRent) {
-            case 1 -> this.forRent = true;
-            case 2 -> this.forRent = false;
+            case Constants.FOR_RENT_OPTION -> this.forRent = true;
+            case Constants.FOR_SALE_OPTION -> this.forRent = false;
         }
     }
 
@@ -97,9 +97,9 @@ public class Property {
     public String toString () {
         String output = this.cityName + " - " + this.street + " " + this.houseNumber + ". \n";
         switch(this.type){
-            case 1 -> output += "Regular apartment ";
-            case 2 -> output += "Penthouse apartment ";
-            case 3 -> output += "Land house ";
+            case Constants.REGULAR_APARTMENT_TYPE -> output += "Regular apartment ";
+            case Constants.PENTHOUSE_APARTMENT_TYPE -> output += "Penthouse apartment ";
+            case Constants.LAND_HOUSE_TYPE -> output += "Land house ";
         }
         if(isForRent()){
             output += "- for rent: ";

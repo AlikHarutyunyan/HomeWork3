@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class City {
 
     private final String cityName;
