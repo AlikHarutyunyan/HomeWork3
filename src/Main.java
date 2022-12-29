@@ -2,11 +2,11 @@ import java.util.Scanner;
 public class Main {
     private static final RealEstate realEstate = new RealEstate();
     private static final Scanner scanner = new Scanner(System.in);
-    public static void main(String[] args) {
+    public static void main(String[] args) { //Complexity: O(n)
         mainMenu();
     }
 
-    private static void mainMenu() {
+    private static void mainMenu() { //Complexity: O(n)
         int userInput;
 
         System.out.println("Please choose the action number");
@@ -35,7 +35,7 @@ public class Main {
         } while (!(userInput == Constants.THIRD_MAIN_MENU_OPTION));
     }
 
-    private static void loginMenu(User currentUser){
+    private static void loginMenu(User currentUser){ //Complexity: O(n)
         int userInput;
         System.out.println("Please choose the action number");
         do {

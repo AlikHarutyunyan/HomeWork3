@@ -8,11 +8,6 @@ public class RealEstate {
 
 
     public RealEstate () {
-        users = new User[] {
-                new User("Michelle", "11458$", "0529516569", true),
-                new User("Alik", "1234$", "0533061346", false)
-        };
-
         cities = new City[] {
                 new City("Ashkelon", "south", new String[] {"Dovev", "Acalanit"}),
                 new City("Ashdod", "south", new String[] {"Mango", "Rambam"}),
@@ -28,7 +23,7 @@ public class RealEstate {
 
     }
 
-    public void createUser () {
+    public void createUser () { //Complexity: O(n)
         User newUser = new User();
         setUserNameFromUser(newUser);
         setPasswordFromUser(newUser);
@@ -39,7 +34,7 @@ public class RealEstate {
         System.out.println("Sign up is complete");
     }
 
-    private void setUserNameFromUser(User newUser){
+    private void setUserNameFromUser(User newUser){ //Complexity: O(n)
         String userName;
         do {
             System.out.println("Enter the user name:");
@@ -51,7 +46,7 @@ public class RealEstate {
         } while (newUser.getUserName() == null);
     }
 
-    private void setPasswordFromUser(User newUser){
+    private void setPasswordFromUser(User newUser){ //Complexity: O(1)
         String userPassword;
         System.out.println("""
                 The password must contain the following elements:
@@ -65,7 +60,7 @@ public class RealEstate {
         } while (newUser.getPassword() == null);
     }
 
-    private void setPhoneNumberFromUser(User newUser){
+    private void setPhoneNumberFromUser(User newUser){ //Complexity: O(1)
         String phoneNumber;
         do {
             System.out.println("Enter your phone number");
@@ -74,7 +69,7 @@ public class RealEstate {
         } while (newUser.getPhoneNumber() == null);
     }
 
-    private void setIsBrokerFromUser(User newUser){
+    private void setIsBrokerFromUser(User newUser){ //Complexity : O(1)
         do {
             System.out.println("Are you a broker? Answer " + Constants.POSITIVE_ANSWER + "/" + Constants.NEGATIVE_ANSWER);
             String userAnswer = scanner.nextLine();
@@ -90,7 +85,7 @@ public class RealEstate {
     }
 
 
-    public User login() {
+    public User login() { //Complexity: O(n)
 
         User currentUser = null;
 
@@ -108,7 +103,7 @@ public class RealEstate {
         return currentUser;
     }
 
-    public boolean postNewProperty (User user) {
+    public boolean postNewProperty (User user) {  //Complexity O(n)
         final int PUBLISHMENT_QUANTITY;
         boolean result = false;
 
@@ -172,7 +167,7 @@ public class RealEstate {
         return result;
     }
 
-    private String getCityNameFromUser(){
+    private String getCityNameFromUser(){ //Complexity: O(n)
         String cityName;
         for (int i = 0; i < cities.length; i++) {
             int num = i + 1;
@@ -185,7 +180,7 @@ public class RealEstate {
         return cityName;
     }
 
-    private String getStreetNameFromUser(int cityIndex){
+    private String getStreetNameFromUser(int cityIndex){ //Complexity: O(n)
         String streetName;
         for (int i = 0; i < cities[cityIndex].getStreets().length; i++) {
             System.out.println(cities[cityIndex].getStreets()[i]);
@@ -198,21 +193,17 @@ public class RealEstate {
         return streetName;
     }
 
-    private int getTypeOfProperty(){
+    private int getTypeOfProperty(){ //Complexity : O(1)
         int typeOfProperty;
 
-        System.out.println("""
-                Enter the number of property type
-                1. Regular apartment in apartment building
-                2. Penthouse in apartment building
-                3. Land house""");
+        printMessageToChooseType();
         typeOfProperty = scanner.nextInt();
         scanner.nextLine();
 
         return typeOfProperty;
     }
 
-    private void setFloorNumberFromUser(Property newProperty){
+    private void setFloorNumberFromUser(Property newProperty){ //Complexity : O(1)
         int floorNumber;
         System.out.println("Enter the floor number");
         floorNumber = scanner.nextInt();
@@ -220,7 +211,7 @@ public class RealEstate {
         newProperty.setFloorNumber(floorNumber);
     }
 
-    private void setHouseNumberFromUser(Property newProperty){
+    private void setHouseNumberFromUser(Property newProperty){ //Complexity : O(1)
         int houseNumber;
         System.out.println("Enter the house number");
         houseNumber = scanner.nextInt();
@@ -228,7 +219,7 @@ public class RealEstate {
         newProperty.setHouseNumber(houseNumber);
     }
 
-    private void setRoomsNumberFromUser(Property newProperty){
+    private void setRoomsNumberFromUser(Property newProperty){ //Complexity : O(1)
         int numberOfRooms;
         System.out.println("Enter the number of rooms");
         numberOfRooms = scanner.nextInt();
@@ -236,18 +227,15 @@ public class RealEstate {
         newProperty.setNumberOfRooms(numberOfRooms);
     }
 
-    private void setForRentFromUser(Property newProperty){
+    private void setForRentFromUser(Property newProperty){ //Complexity: O(1)
         int forRent;
-        System.out.println("""
-                Choose one of the option bellow:
-                1. property for rent
-                2. property for sale""");
+        printMessageToChooseForRent();
         forRent = scanner.nextInt();
         scanner.nextLine();
         newProperty.setForRent(forRent);
     }
 
-    private void setPropertyPriceFromUser(Property newProperty){
+    private void setPropertyPriceFromUser(Property newProperty){ //Complexity: O(1)
         int propertyPrice;
         System.out.println("Enter the price of the property");
         propertyPrice = scanner.nextInt();
@@ -255,7 +243,7 @@ public class RealEstate {
         newProperty.setPrice(propertyPrice);
     }
 
-    public void removeProperty(User user){
+    public void removeProperty(User user){ //Complexity: O(n)
         int userPosts = countUserPublishments(user);
         if(userPosts == 0){
             System.out.println("You have no publishments to delete");
@@ -286,7 +274,7 @@ public class RealEstate {
             }
         }
 
-        public void printAllProperties(){
+        public void printAllProperties(){  //Complexity: O(n)
         int count = 0;
         if(properties != null) {
             for (int i = 0; i < properties.length; i++) {
@@ -298,7 +286,7 @@ public class RealEstate {
         }
         }
 
-        public void printProperties (User user) {
+        public void printProperties (User user) { //Complexity: O(n)
         int count = 0;
         if (properties != null) {
             for (int i = 0; i < properties.length; i++) {
@@ -317,7 +305,7 @@ public class RealEstate {
         }
     }
 
-    public Property[] search () {
+    public Property[] search () { //Complexity O(n)
         Property[] filteredProperties = null;
         if (properties != null && properties.length > 0) {
             System.out.println("Lets start searching. \n" +
@@ -341,7 +329,7 @@ public class RealEstate {
         return filteredProperties;
     }
 
-    private Property[] createFilteredArray(Property[] properties, Boolean forRent,Integer type,Integer roomNumber,Integer minimumPrice,Integer maximumPrice){
+    private Property[] createFilteredArray(Property[] properties, Boolean forRent,Integer type,Integer roomNumber,Integer minimumPrice,Integer maximumPrice){ //Complexity: O(n)
         Property[] filteredProperties = null;
         for (int i = 0; i < properties.length; i++) {
 
@@ -357,7 +345,7 @@ public class RealEstate {
         return filteredProperties;
     }
 
-    private Integer getMaximumPriceFilter (Integer minimumPrice) {
+    private Integer getMaximumPriceFilter (Integer minimumPrice) { //Complexity: O(1)
         Integer maximumPrice = null;
         int userInput;
         boolean endLoop = false;
@@ -387,7 +375,7 @@ public class RealEstate {
         return maximumPrice;
     }
 
-    private Integer getMinimumPriceFilter () {
+    private Integer getMinimumPriceFilter () { //Complexity O(1)
         Integer minimumPrice = null;
         int userInput;
 
@@ -402,7 +390,7 @@ public class RealEstate {
         return minimumPrice;
     }
 
-    private Integer getRoomNumberFilter () {
+    private Integer getRoomNumberFilter () { // Complexity: O(1)
         int userInput;
         Integer roomNumber = null;
 
@@ -418,18 +406,21 @@ public class RealEstate {
         return roomNumber;
     }
 
+    private void printMessageToChooseType(){
+        System.out.println("""
+                    Enter the number of property type
+                    1. Regular apartment in apartment building
+                    2. Penthouse in apartment building
+                    3. Land house""");
+    }
 
-    private Integer getTypeFilter (){
+    private Integer getTypeFilter (){ // Complexity O(1)
         int userInput;
         Integer type = null;
         boolean endLoop = false;
 
         do {
-            System.out.println("""
-                    Enter the number of property type
-                    1. Regular apartment in apartment building
-                    2. Penthouse in apartment building
-                    3. Land house""");
+            printMessageToChooseType();
             userInput = scanner.nextInt();
 
             if (userInput >= Constants.REGULAR_APARTMENT_TYPE && userInput<=Constants.LAND_HOUSE_TYPE
@@ -447,16 +438,20 @@ public class RealEstate {
         return type;
     }
 
-    private Boolean isForRentFilter (){
+    private void printMessageToChooseForRent(){
+        System.out.println("""
+                    Enter the number of relevant option:
+                    1. Property for rent
+                    2. Property for sale""");
+    }
+
+    private Boolean isForRentFilter (){ //Complexity : O(1)
         int userInput;
         Boolean forRent = null;
         boolean endLoop = false;
 
         do {
-            System.out.println("""
-                    Enter the number of relevant option:
-                    1. Property for rent
-                    2. Property for sale""");
+            printMessageToChooseForRent();
             userInput = scanner.nextInt();
             scanner.nextLine();
 
@@ -478,7 +473,7 @@ public class RealEstate {
     }
 
 
-    private Property[] deletePost(int postIndex){
+    private Property[] deletePost(int postIndex){ // Complexity: O(n)
         int arrLength;
 
         if(properties == null) {
@@ -498,7 +493,7 @@ public class RealEstate {
         return tempProperties;
     }
 
-    private int getChosenPostIndex(int[][] postId, int userInput){
+    private int getChosenPostIndex(int[][] postId, int userInput){ // Complexity: O(n)
         int index = Constants.INVALID_VALUE;
         if(postId != null) {
             for (int i = 0; i < postId.length; i++) {
@@ -510,7 +505,7 @@ public class RealEstate {
         }
         return index;
     }
-    private int countUserPublishments(User user){
+    private int countUserPublishments(User user){ // Complexity: O(n)
         int quantity = 0;
         if(properties != null) {
             for (int i = 0; i < properties.length; i++) {
@@ -523,7 +518,7 @@ public class RealEstate {
     }
 
 
-    private int checkIfStreetExists (String streetName, int cityIndex) {
+    private int checkIfStreetExists (String streetName, int cityIndex) { //Complexity: O(n)
         int streetIndex = Constants.INVALID_VALUE;
 
         for (int i = 0; i < cities[cityIndex].getStreets().length; i++) {
@@ -535,7 +530,7 @@ public class RealEstate {
         return streetIndex;
     }
 
-    private int checkIfCityExists (String cityName) {
+    private int checkIfCityExists (String cityName) { // Complexity : O(n)
         int indexOfCity = Constants.INVALID_VALUE;
         for (int i = 0; i < cities.length; i++) {
             if (cities[i].getCityName().toLowerCase().equals(cityName)) {
@@ -546,7 +541,7 @@ public class RealEstate {
         return indexOfCity;
     }
 
-    private int checkIfUserExists (String userLogin, String userPassword) {
+    private int checkIfUserExists (String userLogin, String userPassword) { // Complexity: O(n)
         int result = Constants.INVALID_VALUE;
         if(users != null) {
             for (int i = 0; i < users.length; i++) {
@@ -564,7 +559,7 @@ public class RealEstate {
         }
         return result;
     }
-    private User[] addUser (User[] users, User newUser) {
+    private User[] addUser (User[] users, User newUser) { // Complexity: O(n)
         int usersLength;
         if(users == null){
             usersLength = 0;
@@ -582,14 +577,12 @@ public class RealEstate {
         return tempUsers;
     }
 
-    private Property[] addProperty (Property[] properties, Property newProperty) {
+    private Property[] addProperty (Property[] properties, Property newProperty) { //Complexity : O(n)
         int arrLength;
 
         if (properties == null) {
             arrLength = 0;
-        }
-
-        else {
+        }else {
             arrLength = properties.length;
         }
 
@@ -603,7 +596,7 @@ public class RealEstate {
         return tempProperties;
     }
 
-    private boolean checkAnswer(String userAnswer){
+    private boolean checkAnswer(String userAnswer){  //Complexity : O(1)
         boolean result = false;
         if(userAnswer.equals(Constants.POSITIVE_ANSWER) || userAnswer.equals(Constants.NEGATIVE_ANSWER)){
             result = true;
@@ -613,7 +606,7 @@ public class RealEstate {
         return result;
     }
 
-    private boolean checkIfAvailable(String userName){
+    private boolean checkIfAvailable(String userName){ //Complexity: O(n)
         boolean isAvailable = true;
         if(users != null) {
             for (int i = 0; i < users.length; i++) {
@@ -627,7 +620,7 @@ public class RealEstate {
         return isAvailable;
     }
 
-    public void printFilteredProperties (Property[] properties) {
+    public void printFilteredProperties (Property[] properties) { //Complexity: O(n)
         int count = 0;
 
         if (properties != null) {

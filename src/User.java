@@ -4,13 +4,6 @@ public class User {
     private String phoneNumber;
     private Boolean isBroker;
 
-
-    public User (String userName, String password, String phoneNumber, boolean isBroker) {
-        setUserName(userName);
-        setPassword(password);
-        setPhoneNumber(phoneNumber);
-        this.isBroker = isBroker;
-    }
     public User(){
         this.userName = null;
         this.password = null;
@@ -18,19 +11,19 @@ public class User {
         this.isBroker = null;
 
     }
-    public String getUserName() {
+    public String getUserName() { //Complexity: 0(1)
         return userName;
     }
 
-    public void setUserName(String userName) {
+    public void setUserName(String userName) { //Complexity: 0(1)
         this.userName = userName;
     }
 
-    public String getPassword() {
+    public String getPassword() { //Complexity: 0(1)
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password) { //Complexity: 0(1)
         if (isValidPassword(password)) {
            this.password = password;
         }else{
@@ -38,7 +31,7 @@ public class User {
         }
     }
 
-    private boolean isValidPassword(String password){
+    private boolean isValidPassword(String password){ // Complexity: O(n)
         boolean result = false;
         if (password.length() >= Constants.MINIMUM_PASSWORD_LENGTH) {
             if (password.contains("$") || password.contains("_") || password.contains("%")) {
@@ -50,7 +43,7 @@ public class User {
         return result;
     }
 
-    private boolean containsNumber(String string) {
+    private boolean containsNumber(String string) { // Complexity O(n)
         boolean isNumberCheck = false;
         for (int i = 0; i <= Constants.LAST_DIGIT; i++) {
             if (string.contains("" + i)) {
@@ -61,17 +54,17 @@ public class User {
         return isNumberCheck;
     }
 
-    public String getPhoneNumber() {
+    public String getPhoneNumber() { //Complexity: 0(1)
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) { //Complexity: 0(1)
         if(phoneNumberValidation(phoneNumber)){
             this.phoneNumber = phoneNumber;
         }
     }
 
-    private boolean phoneNumberValidation(String phoneNumber){
+    private boolean phoneNumberValidation(String phoneNumber){ // Complexity O(n)
         boolean isPhoneNumber = true;
         if (phoneNumber.length() == Constants.PHONE_NUMBER_LENGTH && phoneNumber.startsWith("05")) {
             for (int i = 0; i < phoneNumber.length(); i++) {
@@ -90,15 +83,15 @@ public class User {
         return isPhoneNumber;
     }
 
-    public void setBroker(boolean broker) {
+    public void setBroker(boolean broker) { //Complexity: 0(1)
         this.isBroker = broker;
     }
 
-    public Boolean getBroker() {
+    public Boolean getBroker() { //Complexity: 0(1)
         return isBroker;
     }
 
-    public String toString(){
+    public String toString(){  //Complexity: 0(1)
         return this.getUserName() + " " + this.getPhoneNumber();
     }
 

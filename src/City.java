@@ -10,15 +10,15 @@ public class City {
         this.streets = streets;
     }
 
-    public String getCityName() {
+    public String getCityName() { //Complexity: 0(1)
         return cityName;
     }
 
-    public String getDistrict() {
+    public String getDistrict() { //Complexity: 0(1)
         return district;
     }
 
-    public String[] getStreets() {
+    public String[] getStreets() { //Complexity: 0(1)
         return streets;
     }
 
