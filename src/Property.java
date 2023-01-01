@@ -25,7 +25,7 @@ public class Property {
         return street;
     }
 
-    public void setStreet(String streetName) { //Complexity: 0(1)
+    public void setStreet(String streetName) { //Complexity: 0(n)
         if(checkIfStreetExists(this.city,streetName)){
             streetName = streetName.substring(0,1).toUpperCase() + streetName.substring(1);
             this.street = streetName;
