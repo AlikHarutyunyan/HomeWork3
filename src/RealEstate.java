@@ -125,15 +125,14 @@ public class RealEstate {
             if(cityIndex == Constants.INVALID_VALUE){
                 System.out.println("The city you wrote doesnt exist");
             }else{
-                newProperty.setCityName(cities[cityIndex].getCityName());
+                newProperty.setCity(cities[cityIndex]);
 
                 String streetName = getStreetNameFromUser(cityIndex);
-                int streetIndex = checkIfStreetExists(streetName, cityIndex);
+                newProperty.setStreet(streetName);
 
-                if(streetIndex == Constants.INVALID_VALUE){
+                if(newProperty.getStreet() == null){
                     System.out.println("The street doesnt exist");
                 }else{
-                    newProperty.setStreet(cities[cityIndex].getStreets()[streetIndex]);
 
                     int typeOfProperty = getTypeOfProperty();
                     newProperty.setType(typeOfProperty);
@@ -258,7 +257,7 @@ public class RealEstate {
                             option+1, i
                     };
                     option++;
-                    System.out.println(option + ") " + properties[i].getCityName() + " - " + properties[i].getStreet() + " " + properties[i].getHouseNumber());
+                    System.out.println(option + ") " + properties[i].getCity().getCityName() + " - " + properties[i].getStreet() + " " + properties[i].getHouseNumber());
                 }
             }
 
@@ -309,7 +308,7 @@ public class RealEstate {
         Property[] filteredProperties = null;
         if (properties != null && properties.length > 0) {
             System.out.println("Lets start searching. \n" +
-                    "If you want to skip a filter just write " + Constants.INVALID_VALUE);
+                    "If you want to skip a filter just write " + Constants.SKIP_FILTER_NUMBER);
             Boolean forRent = isForRentFilter();
             Integer type = getTypeFilter();
             Integer roomNumber = getRoomNumberFilter();
@@ -424,7 +423,7 @@ public class RealEstate {
             userInput = scanner.nextInt();
 
             if (userInput >= Constants.REGULAR_APARTMENT_TYPE && userInput<=Constants.LAND_HOUSE_TYPE
-                    || userInput == Constants.INVALID_VALUE) {
+                    || userInput == Constants.SKIP_FILTER_NUMBER) {
                 switch (userInput) {
                     case Constants.REGULAR_APARTMENT_TYPE, Constants.LAND_HOUSE_TYPE, Constants.PENTHOUSE_APARTMENT_TYPE -> type = userInput;
                 }
@@ -432,7 +431,7 @@ public class RealEstate {
             }
 
             else {
-                System.out.println("Please choose a relevant option or skip by writing " + Constants.INVALID_VALUE);
+                System.out.println("Please choose a relevant option or skip by writing " + Constants.SKIP_FILTER_NUMBER);
             }
         } while (!endLoop);
         return type;
@@ -456,7 +455,7 @@ public class RealEstate {
             scanner.nextLine();
 
             if (userInput == Constants.FOR_RENT_OPTION || userInput == Constants.FOR_SALE_OPTION
-                    || userInput == Constants.INVALID_VALUE) {
+                    || userInput == Constants.SKIP_FILTER_NUMBER) {
                 endLoop = true;
 
                 switch (userInput) {
@@ -466,7 +465,7 @@ public class RealEstate {
             }
 
             else {
-                System.out.println("Please choose a relevant option or skip by writing " + Constants.INVALID_VALUE);
+                System.out.println("Please choose a relevant option or skip by writing " + Constants.SKIP_FILTER_NUMBER);
             }
         } while (!endLoop);
         return forRent;
@@ -518,17 +517,7 @@ public class RealEstate {
     }
 
 
-    private int checkIfStreetExists (String streetName, int cityIndex) { //Complexity: O(n)
-        int streetIndex = Constants.INVALID_VALUE;
 
-        for (int i = 0; i < cities[cityIndex].getStreets().length; i++) {
-            if (cities[cityIndex].getStreets()[i].toLowerCase().equals(streetName)) {
-                streetIndex = i;
-                break;
-            }
-        }
-        return streetIndex;
-    }
 
     private int checkIfCityExists (String cityName) { // Complexity : O(n)
         int indexOfCity = Constants.INVALID_VALUE;

@@ -1,32 +1,48 @@
 public class Property {
-    private String cityName;
+    private City city;
     private String street;
     private int numberOfRooms;
     private int price;
     private int type;
     private Boolean forRent;
     private int houseNumber;
-    private int floorNumber;
+    private Integer floorNumber;
     private User user;
 
     public Property () {
 
     }
 
-    public String getCityName() { //Complexity: 0(1)
-        return cityName;
+    public City getCity() { //Complexity: 0(1)
+        return city;
     }
 
-    public void setCityName(String cityName) { //Complexity: 0(1)
-        this.cityName = cityName;
+    public void setCity(City city) { //Complexity: 0(1)
+        this.city = city;
     }
 
     public String getStreet() { //Complexity: 0(1)
         return street;
     }
 
-    public void setStreet(String street) { //Complexity: 0(1)
-        this.street = street;
+    public void setStreet(String streetName) { //Complexity: 0(1)
+        if(checkIfStreetExists(this.city,streetName)){
+            streetName = streetName.substring(0,1).toUpperCase() + streetName.substring(1);
+            this.street = streetName;
+        }
+    }
+
+    private boolean checkIfStreetExists (City city, String streetName) { //Complexity: O(n)
+        boolean result = false;
+
+        for (int i = 0; i < city.getStreets().length; i++) {
+            if(streetName.equals(city.getStreets()[i].toLowerCase().trim())){
+                result = true;
+                break;
+            }
+        }
+
+        return result;
     }
 
     public int getNumberOfRooms() { //Complexity: 0(1)
@@ -95,7 +111,7 @@ public class Property {
     }
 
     public String toString () { //Complexity: 0(1)
-        String output = this.cityName + " - " + this.street + " " + this.houseNumber + ". \n";
+        String output = this.city.getCityName() + " - " + this.street + " " + this.houseNumber + ". \n";
         switch(this.type){
             case Constants.REGULAR_APARTMENT_TYPE -> output += "Regular apartment ";
             case Constants.PENTHOUSE_APARTMENT_TYPE -> output += "Penthouse apartment ";
@@ -106,7 +122,7 @@ public class Property {
         }else{
             output += "- for sale: ";
         }
-        output += this.numberOfRooms + " rooms, floor " + this.floorNumber + ".\n";
+        output += this.numberOfRooms + " rooms" + (this.floorNumber == null ? ".\n" : ", floor " + this.floorNumber + ".\n");
         output += "Price: " + this.price + "$.\n";
         output += "Contact info: " + this.user + " ";
         if(user.getBroker()){
